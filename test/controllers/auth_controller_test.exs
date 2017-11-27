@@ -5,7 +5,7 @@ defmodule Tilex.AuthControllerTest do
 
   test "GET /auth/google/callback with hashrocket email", %{conn: conn} do
     ueberauth_auth =
-      ueberauth_struct("developer@hashrocket.com",
+      ueberauth_struct("developer@brianemory.com",
                        "Ricky Rocketeer",
                        "186823978541230597895")
 
@@ -14,26 +14,26 @@ defmodule Tilex.AuthControllerTest do
     conn = get conn, auth_path(conn, :callback, "google")
 
     assert redirected_to(conn) == "/"
-    assert get_flash(conn, :info) == "Signed in with developer@hashrocket.com"
+    assert get_flash(conn, :info) == "Signed in with developer@brianemory.com"
 
     new_developer =
       Tilex.Repo.get_by!(Tilex.Developer, google_id: "186823978541230597895")
-    assert new_developer.email == "developer@hashrocket.com"
+    assert new_developer.email == "developer@brianemory.com"
     assert new_developer.username == "rickyrocketeer"
   end
 
   test "GET /auth/google/callback with existing hashrocket email", %{conn: conn} do
     Factory.insert!(:developer,
-                    email: "rebecca@hashrocket.com",
+                    email: "rebecca@brianemory.com",
                     name: "Rebecca Rocketeer",
                     google_id: "126456978541230597123"
                   )
     existing_developer =
       Tilex.Repo.get_by!(Tilex.Developer, google_id: "126456978541230597123")
-    assert existing_developer.email == "rebecca@hashrocket.com"
+    assert existing_developer.email == "rebecca@brianemory.com"
 
     ueberauth_auth =
-      ueberauth_struct("rebecca@hashrocket.com",
+      ueberauth_struct("rebecca@brianemory.com",
                        "Rebecca Rocketeer",
                        "126456978541230597123")
 
@@ -42,7 +42,7 @@ defmodule Tilex.AuthControllerTest do
     conn = get conn, auth_path(conn, :callback, "google")
 
     assert redirected_to(conn) == "/"
-    assert get_flash(conn, :info) == "Signed in with rebecca@hashrocket.com"
+    assert get_flash(conn, :info) == "Signed in with rebecca@brianemory.com"
   end
 
   test "GET /auth/google/callback with other email domain", %{conn: conn} do

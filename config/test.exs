@@ -16,7 +16,7 @@ config :tilex, Tilex.Repo,
   adapter: Ecto.Adapters.Postgres,
   database: "tilex_test",
   hostname: "localhost",
-  username: "postgres",
+  username: "thebrianemory",
   pool: Ecto.Adapters.SQL.Sandbox
 
 config :tilex, :page_size, 5
